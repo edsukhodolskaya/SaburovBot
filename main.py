@@ -36,7 +36,7 @@ while(True):
            cost = page[page.find("data-cost") + len("data-cost=\""):page.find("data-id") - len("\" ")]
            seats = int(page[page.find("data-seats") + len("data-seats=\""):page.find(">") - len(" >")])
            if date_saburov not in unique_dates:
-               saburov_concerts.append(Saburov_concert(cost, seats, date_saburov))
+               saburov_concerts.append(Saburov_concert(date_saburov, seats, cost))
                unique_dates.add(date_saburov)
        i += 1
 
