@@ -1,9 +1,11 @@
 import urllib.request
 import re
 import locale
+from telegram.ext import Updater
+from telegram.ext import CommandHandler
+import logging
 
 class Saburov_concert(object):
-
     def __init__(self, date_saburov, seats_left, cost):
         """Constructor"""
         self.date_saburov = date_saburov
@@ -41,3 +43,19 @@ while(True):
        i += 1
 
 
+updater = Updater(token='TOKEN', use_context=True)
+dispatcher = updater.dispatcher
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                     level=logging.INFO)
+
+
+def start(update, context):
+    for saburov_concert in saburov_concerts:
+        s = saburov_concert.string_representation()
+        context.bot.send_message(chat_id=update.effective_chat.id, text=s)
+
+start_handler = CommandHandler('start', start)
+dispatcher.add_handler(start_handler)
+
+updater.start_polling()
